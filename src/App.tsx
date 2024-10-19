@@ -1,11 +1,8 @@
-import React from 'react';
+import React from "react";
+import CardsList from "./pages/CardsList";
 
-const App = () => {
-  return (
-    <div>
-      Test
-    </div>
-  );
-}
+const App: React.FC = () => {
+  return <CardsList />;
+};
 
 export default App;
