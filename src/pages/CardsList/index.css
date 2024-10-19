@@ -2,10 +2,21 @@
     padding: 2rem;
 }
 .last-saved-text{
-    margin: 0 1.5rem;
+    margin: 0 1rem 0 1.5rem;
     font-weight: bold;
 }
 .cards-container{
     display: grid;
     grid-template-columns: auto auto auto;
+}
+.last-saved-container{
+    display: flex;
+    align-items: center;
+}
+.cards-loader-container{
+    display: flex;
+    justify-content: center;    
+    width: 100%;
+    position: absolute;    
+    top: 45%;
 }

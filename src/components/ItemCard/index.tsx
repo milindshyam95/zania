@@ -5,6 +5,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { ImageUrls } from "../../constants/imageLinks";
 import "./index.css";
 import { CardProps, DragItem } from "../../interfaces/interfaces";
+import Loader from "../Loader";
 
 const ItemCard: FC<CardProps> = ({
   id,
@@ -80,7 +81,7 @@ const ItemCard: FC<CardProps> = ({
         />
       </div>
       <div className={loading ? "show-loader" : "hide-loader"}>
-        <div className="loader"></div>
+        <Loader />
       </div>
     </div>
   );

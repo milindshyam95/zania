@@ -6,14 +6,18 @@ import ItemCard from "../../components/ItemCard";
 import { ItemType } from "../../interfaces/interfaces";
 import update from "immutability-helper";
 import "./index.css";
+import Loader from "../../components/Loader";
 
 const CardsList: React.FC = () => {
   const [data, setData] = useState<ItemType[]>([]);
   const [initialRender, setInitialRender] = useState<boolean>(true);
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const fetchData = async () => {
+    setIsFetching(true);
     const response = await fetch("/cardsData", {
       mode: "no-cors",
       method: "GET",
@@ -22,9 +26,11 @@ const CardsList: React.FC = () => {
       },
     });
     response.json().then((data) => setData(data));
+    setIsFetching(false);
   };
 
   const updateCardsData = useCallback(async () => {
+    setIsLoading(true);
     await fetch("/updateCards", {
       method: "POST",
       headers: {
@@ -36,6 +42,7 @@ const CardsList: React.FC = () => {
     let currentTime: Date = new Date();
     setLastUpdated(currentTime);
     localStorage.setItem("lastSavedTime", currentTime.toString());
+    setIsLoading(false);
   }, [data]);
 
   const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
@@ -80,22 +87,31 @@ const CardsList: React.FC = () => {
     <>
       <DndProvider backend={HTML5Backend}>
         <div className="page-container">
-          <p className="last-saved-text">
-            Last saved at: {lastUpdated.toLocaleTimeString()}
-          </p>
-          <div className="cards-container">
-            {data.map((item, index) => (
-              <ItemCard
-                key={item.position}
-                index={index}
-                id={item.position}
-                title={item.title}
-                moveCard={moveCard}
-                type={item.type}
-                onSelectImage={selectImageHandler}
-              />
-            ))}
+          <div className="last-saved-container">
+            <p className="last-saved-text">
+              Last saved at: {lastUpdated.toLocaleTimeString()}{" "}
+            </p>
+            {isLoading && <Loader />}
           </div>
+          {isFetching ? (
+            <div className="cards-loader-container">
+              <Loader />
+            </div>
+          ) : (
+            <div className="cards-container">
+              {data.map((item, index) => (
+                <ItemCard
+                  key={item.position}
+                  index={index}
+                  id={item.position}
+                  title={item.title}
+                  moveCard={moveCard}
+                  type={item.type}
+                  onSelectImage={selectImageHandler}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </DndProvider>
 
