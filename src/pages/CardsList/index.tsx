@@ -7,6 +7,7 @@ import { ItemType } from "../../interfaces/interfaces";
 import update from "immutability-helper";
 import "./index.css";
 import Loader from "../../components/Loader";
+import moment from "moment";
 
 const CardsList: React.FC = () => {
   const [data, setData] = useState<ItemType[]>([]);
@@ -65,6 +66,10 @@ const CardsList: React.FC = () => {
     setSelectedImage("");
   };
 
+  const getTimeSinceLastSaved = () => {
+    return moment.utc(lastUpdated).local().startOf("seconds").fromNow();
+  };
+
   useEffect(() => {
     let lastUpdatedTime = localStorage.getItem("lastSavedTime");
     if (lastUpdatedTime) {
@@ -89,7 +94,7 @@ const CardsList: React.FC = () => {
         <div className="page-container">
           <div className="last-saved-container">
             <p className="last-saved-text">
-              Last saved at: {lastUpdated.toLocaleTimeString()}{" "}
+              Last saved: {getTimeSinceLastSaved()}{" "}
             </p>
             {isLoading && <Loader />}
           </div>
