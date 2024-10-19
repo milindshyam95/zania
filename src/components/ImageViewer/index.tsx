@@ -1,29 +1,10 @@
 import React, { useEffect } from "react";
+import "./index.css";
 
 interface ImageViewerProps {
   imgUrl: string;
   onDismissImage: () => void;
 }
-
-const imgStyle = {
-  width: "600px",
-  margin: "auto",
-  display: "block",
-  position: "absolute" as "absolute",
-  left: 0,
-  top: 0,
-  right: 0,
-  bottom: 0,
-};
-
-const containerStyle = {
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
-  position: "absolute" as "absolute",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-};
 
 const ImageViewer: React.FC<ImageViewerProps> = ({
   imgUrl,
@@ -41,8 +22,8 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
   }, [onDismissImage]);
 
   return (
-    <div style={containerStyle}>
-      <img style={imgStyle} src={imgUrl} alt={imgUrl} />
+    <div className="expanded-container">
+      <img className="expanded-img" src={imgUrl} alt={imgUrl} />
     </div>
   );
 };

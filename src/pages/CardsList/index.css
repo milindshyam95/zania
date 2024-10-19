@@ -1,5 +1,11 @@
-.container{
+.page-container{
+    padding: 2rem;
+}
+.last-saved-text{
+    margin: 0 1.5rem;
+    font-weight: bold;
+}
+.cards-container{
     display: grid;
     grid-template-columns: auto auto auto;
-    padding: 2rem;
 }
